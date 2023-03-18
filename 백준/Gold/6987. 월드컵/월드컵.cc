@@ -8,11 +8,10 @@ int case1[] = { 0,0,0,0,0,1,1,1,1,2,2,2,3,3,4 };
 int case2[] = { 1,2,3,4,5,2,3,4,5,3,4,5,4,5,5 };
 
 void dfs(int idx, int now) {
+	if (ans[idx])
+		return;
 	// 기저조건 -> 15경기 모두 종료
 	if (now == 15) {
-		if (ans[idx])
-			return;
-
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 3; j++)
 				if (arr[i][j] != tmp[i][j])
