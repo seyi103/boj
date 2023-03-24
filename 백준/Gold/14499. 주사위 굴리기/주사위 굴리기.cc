@@ -60,6 +60,8 @@ void changeDice(int d) {
 }
 
 int main() {
+	fastIO;
+
 	int K;
 	cin >> N >> M >> dice.y >> dice.x >> K;
 	for (int i = 0; i < N; i++)
