@@ -95,7 +95,7 @@ void bfs_num(int y, int x, int n) {
 }
 // 거리 구하기
 void getDist(int y, int x, int n) {
-	for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++) {
         int ny = y;
         int nx = x;
         int dist = 0;
@@ -113,8 +113,8 @@ void getDist(int y, int x, int n) {
             }
             dist++;
         }
-	}
-    
+    }
+
 }
 
 int main() {
@@ -138,13 +138,12 @@ int main() {
         parent[i] = i;
 
     for (int i = 0; i < N; i++)
-        for (int j = 0; j < M; j++) 
+        for (int j = 0; j < M; j++)
             // 섬간 거리를 구해서 담아주자
-            if (MAP[i][j]) 
+            if (MAP[i][j])
                 getDist(i, j, MAP[i][j]);
     // 이제 MST로 연결
     int ans = kruskal();
     cout << ans;
-
     return 0;
 }
