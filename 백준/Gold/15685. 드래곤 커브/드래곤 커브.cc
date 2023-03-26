@@ -4,8 +4,6 @@
 #include <algorithm>
 using namespace std;
 
-// 뭐가 틀린거지... 왜 틀리는지 모르겠네 50분 사용
-
 int ydir[] = { 0,-1,0,1 };
 int xdir[] = { 1,0,-1,0 };
 int ey, ex;
