@@ -1,306 +1,115 @@
+#define fastIO ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #include<iostream>
-
 #include<algorithm>
-
 #include<vector>
-
- 
-
-#define endl "\n"
-
-#define MAX 11
-
 using namespace std;
 
- 
+int ydir[] = { -1, -1, -1, 0, 0, 1, 1, 1 };
+int xdir[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 
 int N, M, K;
 
-int Energy[MAX][MAX];
+int board[11][11]; // 양분
+int A[11][11];
+vector<int> MAP[11][11]; 
+int res;
 
-int Insert_Energy[MAX][MAX];
-
- 
-
-vector<int> MAP[MAX][MAX];
-
- 
-
-int dx[] = { -1, -1, -1, 0, 0, 1, 1, 1 };
-
-int dy[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
-
- 
-
-void Input()
-
-{
-
+void input() {
     cin >> N >> M >> K;
-
-    for (int i = 1; i <= N; i++)
-
-    {
-
-        for (int j = 1; j <= N; j++)
-
-        {
-
-            cin >> Insert_Energy[i][j];
-
-            Energy[i][j] = 5;
-
+    for (int i = 1; i <= N; i++) {
+        for (int j = 1; j <= N; j++) {
+            cin >> A[i][j];
+            board[i][j] = 5;
         }
-
     }
 
-    
-
-    for (int i = 0; i < M; i++)
-
-    {
-
-        int a, b, c;
-
-        cin >> a >> b >> c;
-
-        MAP[a][b].push_back(c);
-
+    for (int i = 0; i < M; i++) {
+        int y, x, z;
+        cin >> y >> x >> z;
+        MAP[y][x].push_back(z);
     }
-
 }
 
- 
+void solve() {
+    for (int i = 0; i < K; i++) {
+        // 봄 -> 자신의 나이만큼 양분을 먹고, 나이가 1 증가
+        // 그런데 양분이 부족하면 나무가 죽는다
+        for (int i = 1; i <= N; i++) {
+            for (int j = 1; j <= N; j++) {
+                // 그 칸에 나무가 없으면 continue
+                if(!MAP[i][j].size())
+                    continue;
 
-void SpringAndSummer()
+                int die = 0;
+                vector<int> tmp;
 
-{
+                sort(MAP[i][j].begin(), MAP[i][j].end());
 
-    for (int i = 1; i <= N; i++)
-
-    {
-
-        for (int j = 1; j <= N; j++)
-
-        {
-
-            if (MAP[i][j].size() == 0) continue;
-
-            
-
-            int Die_Tree_Energy = 0;
-
-            vector<int> Temp;
-
- 
-
-            sort(MAP[i][j].begin(), MAP[i][j].end());
-
-            for (int k = 0; k < MAP[i][j].size(); k++)
-
-            {
-
-                int Age = MAP[i][j][k];
-
- 
-
-                if (Energy[i][j] >= Age)
-
-                {
-
-                    Energy[i][j] = Energy[i][j] - Age;
-
-                    Temp.push_back(Age + 1);
-
-                }
-
-                else
-
-                {
-
-                    Die_Tree_Energy = Die_Tree_Energy + (Age / 2);
-
-                }
-
-            }
-
- 
-
-            MAP[i][j].clear();
-
-            for (int k = 0; k < Temp.size(); k++)
-
-            {
-
-                MAP[i][j].push_back(Temp[k]);
-
-            }
-
-            Energy[i][j] = Energy[i][j] + Die_Tree_Energy;
-
-        }
-
-    }    
-
-}
-
- 
-
-void Fall()
-
-{
-
-    for (int i = 1; i <= N; i++)
-
-    {
-
-        for (int j = 1; j <= N; j++)
-
-        {
-
-            if (MAP[i][j].size() == 0) continue;
-
- 
-
-            for (int k = 0; k < MAP[i][j].size(); k++)
-
-            {
-
-                int Age = MAP[i][j][k];
-
- 
-
-                if (Age % 5 == 0)
-
-                {
-
-                    for (int a = 0; a < 8; a++)
-
-                    {
-
-                        int nx = i + dx[a];
-
-                        int ny = j + dy[a];
-
- 
-
-                        if (nx >= 1 && ny >= 1 && nx <= N && ny <= N)
-
-                        {
-
-                            MAP[nx][ny].push_back(1);
-
-                        }
-
+                // 이제 나무를 키울건데
+                for (int k = 0; k < MAP[i][j].size(); k++) {
+                    int age = MAP[i][j][k];
+                    // 양분이 충분하면 양분을 먹고 나무가 자란다!
+                    if (board[i][j] >= age) {
+                        board[i][j] = board[i][j] - age;
+                        tmp.push_back(age + 1);
                     }
-
+                    // 양분이 부족하면 이 나무는 죽는다!
+                    // 죽은 나무는 나중에 양분이 된다!
+                    else
+                        die += (age / 2);
                 }
+                // 맵을 비우고 자란 애들을 다시 담아준다
+                MAP[i][j].clear();
+                for (int k = 0; k < tmp.size(); k++)
+                    MAP[i][j].push_back(tmp[k]);
 
+                // 여름 -> 이제 해당 칸의 양분을 아까 죽은 나무의 나이/2 만큼 더해주자!
+                board[i][j] = board[i][j] + die;
             }
-
         }
+        // 가을 -> 번식하는 나무는 나이가 5의 배수이어야 하며, 
+        // 인접한 8개의 칸에 나이가 1인 나무
+        for (int i = 1; i <= N; i++) {
+            for (int j = 1; j <= N; j++) {
+                // 그 칸에 나무가 없으면 continue
+                if (!MAP[i][j].size())
+                    continue;
 
-    }
+                for (int k = 0; k < MAP[i][j].size(); k++) {
+                    int age = MAP[i][j][k];
 
-}
+                    if (age % 5 != 0)
+                        continue;
+                    // 8방향 번식
+					for (int d = 0; d < 8; d++) {
+						int ny = i + ydir[d];
+						int nx = j + xdir[d];
 
- 
-
-void Winter()
-
-{
-
-    for (int i = 1; i <= N; i++)
-
-    {
-
-        for (int j = 1; j <= N; j++)
-
-        {
-
-            Energy[i][j] = Energy[i][j] + Insert_Energy[i][j];
-
+						if (ny >= 1 && nx >= 1 && ny <= N && nx <= N)
+							MAP[ny][nx].push_back(1);
+					}
+                    
+                }
+            }
         }
-
+        // 겨울 -> 땅에 양분을 추가
+        for (int i = 1; i <= N; i++)
+            for (int j = 1; j <= N; j++)
+                board[i][j] += A[i][j];
     }
 
+    for (int i = 1; i <= N; i++) 
+        for (int j = 1; j <= N; j++) 
+            res += MAP[i][j].size();
 }
 
- 
 
-void Solution()
+int main() {
+    fastIO;
 
-{
-
-    for (int i = 0; i < K; i++)
-
-    {
-
-        SpringAndSummer();
-
-        Fall();
-
-        Winter();
-
-    }
-
- 
-
-    int Answer = 0;
-
-    for (int i = 1; i <= N; i++)
-
-    {
-
-        for (int j = 1; j <= N; j++)
-
-        {
-
-            Answer = Answer + MAP[i][j].size();
-
-        }
-
-    }
-
- 
-
-    cout << Answer << endl;
-
-}
-
- 
-
-void Solve()
-
-{
-
-    Input();
-
-    Solution();
-
-}
-
- 
-
-int main(void)
-
-{
-
-    ios::sync_with_stdio(false);
-
-    cin.tie(NULL);
-
-    cout.tie(NULL);
-
- 
-
-    //freopen("Input.txt", "r", stdin);
-
-    Solve();
-
- 
+    input();
+    solve();
+    cout << res << '\n';
 
     return 0;
-
 }
-
