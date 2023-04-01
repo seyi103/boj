@@ -1,6 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #define fastIO ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-#include <bits/stdc++.h>
+#include <stdio.h>
 using namespace std;
 
 struct Node {
@@ -52,7 +52,6 @@ void spread(int cur) {
 }
 
 void move(int cur) {
-	int de = 1;
 	// 위 -> 아래
 	for (int i = uy - 1; i > 0; i--)
 		MAP[cur][i][0] = MAP[cur][i - 1][0];
@@ -71,7 +70,7 @@ void move(int cur) {
 	// 아래 -> 위
 	for (int i = dy + 1; i < N; i++)
 		MAP[cur][i][0] = MAP[cur][i + 1][0];
-	// 오른쪽 -> 왼쪽
+	// 오른쪽 -> 왼
 	for (int j = 0; j < M - 1; j++)
 		MAP[cur][N - 1][j] = MAP[cur][N - 1][j + 1];
 	// 위 -> 아래
@@ -106,10 +105,10 @@ void solve() {
 
 int main() {
 	uy = -1;
-	cin >> N >> M >> T;
+	scanf("%d %d %d", &N, &M, &T);
 	for (int i = 0; i < N; i++)
 		for (int j = 0; j < M; j++) {
-			cin >> MAP[0][i][j];
+			scanf("%d", &MAP[0][i][j]);
 			if (MAP[0][i][j] == -1) {
 				if (uy == -1)
 					uy = i, ux = j;
