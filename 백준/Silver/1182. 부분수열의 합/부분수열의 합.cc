@@ -20,7 +20,7 @@ int main() {
         scanf("%d", &arr[i]);
 
     dfs(0, 0);
-    if (0 == S)
+    if (S == 0)
         res--;
     printf("%d", res);
     return 0;
