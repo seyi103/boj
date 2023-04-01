@@ -1,6 +1,4 @@
-#define fastIO ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-#include <iostream>
-#include <vector>
+#include <stdio.h>
 using namespace std;
 
 int N, S;
@@ -8,13 +6,11 @@ int arr[21];
 int res;
 
 int main() {
-    fastIO;
-
-    cin >> N >> S;
+    scanf("%d %d", &N, &S);
     for (int i = 0; i < N; i++)
-        cin >> arr[i];
+        scanf("%d", &arr[i]);
     
-    for (int i = 1; i < (1<<N); i++) {
+    for (int i = 1; i < (1 << N); i++) {
         int sum = 0;
         for (int j = 0; j < N; j++) {
             if(i & (1<<j))
@@ -23,6 +19,6 @@ int main() {
         if (sum == S)
             res++;
     }
-    cout << res;
+    printf("%d", res);
     return 0;
 }
