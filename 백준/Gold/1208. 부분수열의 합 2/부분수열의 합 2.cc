@@ -1,7 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <vector>
-#include <algorithm>
 #include <unordered_map>
 using namespace std;
 using ll = long long;
@@ -23,11 +21,11 @@ ll res;
 
 void dfs(int now, int sum) {
     // 기저조건 -> N/2까지 봤을때
-    if (now == N/2) {
+    if (now == N / 2) {
         um[sum]++;
         return;
     }
-    
+
     // 안더한다
     dfs(now + 1, sum);
     // 더한다
@@ -37,7 +35,7 @@ void dfs(int now, int sum) {
 void dfs2(int now, int sum) {
     // 기저조건 -> N까지 봤을때
     if (now == N) {
-        if(um.find(S-sum) != um.end())
+        if (um.find(S - sum) != um.end())
             res += um[S - sum];
         return;
     }
@@ -52,13 +50,13 @@ int main() {
     for (int i = 0; i < N; i++)
         scanf("%d", &arr[i]);
     int de = 1;
- 
+
     dfs(0, 0);
     dfs2(N / 2, 0);
-    
-    if (!S) printf("%lld\n", res-1);
-    else
-        printf("%lld\n", res);
-    
+
+    if (!S)
+        res--;
+    printf("%lld\n", res);
+
     return 0;
 }
