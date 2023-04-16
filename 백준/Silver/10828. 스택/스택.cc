@@ -1,6 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include <iostream>
-#include <string>
+#include <stdio.h>
+#include <string.h>
 using namespace std;
 
 struct Stack {
@@ -46,27 +46,27 @@ int main() {
 	stmp.init();
 
 	for (int q = 0; q < qry_cnt; q++) {
-		string qry;
+		char qry[20];
 		int data = 0, res = 0;
 		int de = 1;
-		cin >> qry;
-		if (qry == "push") {
+		scanf("%s", qry);
+		if (!strcmp(qry,"push")) {
 			scanf("%d", &data);
 			stmp.push(data);
 		}
-		else if (qry == "pop") {
+		else if (!strcmp(qry, "pop")) {
 			res = stmp.pop();
 			printf("%d\n", res);
 		}
-		else if (qry == "size") {
+		else if (!strcmp(qry, "size")) {
 			res = stmp.size();
 			printf("%d\n", res);
 		}
-		else if (qry == "empty") {
+		else if (!strcmp(qry, "empty")) {
 			res = stmp.empty();
 			printf("%d\n", res);
 		}
-		else if (qry == "top") {
+		else if (!strcmp(qry, "top")) {
 			res = stmp.top();
 			printf("%d\n", res);
 		}
