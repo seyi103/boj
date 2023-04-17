@@ -7,7 +7,7 @@ int MAP[11][11];
 int visited[11];
 int ans = 21e8;
 int st;
-
+// 해밀턴 순환 
 void dfs(int now, int sum, int cnt) {
 	// 기저조건 -> 시작 노드로 돌아왔고, 모든 노드를 방문 했다면
 	if (cnt == N && now == st) {
