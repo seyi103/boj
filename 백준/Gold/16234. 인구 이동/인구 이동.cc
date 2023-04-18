@@ -6,6 +6,9 @@
 #include <cstring>
 using namespace std;
 
+// bfs로 탐색하며 연합의 번호 붙임
+// 다시 bfs 탐색하며 인구수 이동
+
 struct Node {
 	int y, x;
 };
