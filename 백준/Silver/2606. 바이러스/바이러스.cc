@@ -1,7 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-
-const int BUFSIZE = 101*101;
+const int BUFSIZE = 101 * 101;
 
 struct Node {
 	int data;
@@ -23,17 +22,17 @@ void push(int idx, int d) {
 }
 
 void bfs(int start) {
-	int sp = 0, ep = 0, cnt = 0;
+	int cnt = 0, sp = 0, ep = 0;
 	// queue 준비
 	int queue[101] = { 0, };
-	queue[sp++] = 1;
+	queue[sp++] = start;
 	// visited 준비
 	int visited[101] = { 0, };
 	visited[start] = 1;
 
-	while (sp > ep){ // 연결된 끝까지 다 볼때 까지
+	while (sp > ep) {
 		int now = queue[ep++];
-		
+
 		for (Node* node = HEAD[now].next; node; node = node->next) {
 			if (visited[node->data])
 				continue;
