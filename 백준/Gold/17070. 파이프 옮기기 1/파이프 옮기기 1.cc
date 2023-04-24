@@ -1,4 +1,4 @@
-#include <iostream>
+#include <stdio.h>
 using namespace std;
 
 int N;
@@ -6,10 +6,10 @@ int MAP[20][20];
 int dp[3][20][20];
 
 int main() {
-	cin >> N;
+	scanf("%d", &N);
 	for (int i = 1; i <= N; i++)
 		for (int j = 1; j <= N; j++)
-			cin >> MAP[i][j];
+			scanf("%d", &MAP[i][j]);
 
 	// 초기 설정 -> 가로 파이프
 	dp[0][1][2] = 1;
@@ -45,7 +45,7 @@ int main() {
 		}
 	}
 
-	cout << dp[0][N][N] + dp[1][N][N] + dp[2][N][N] << '\n';
+	printf("%d\n", dp[0][N][N] + dp[1][N][N] + dp[2][N][N]);
 
 	return 0;
 }
