@@ -1,6 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <cstring>
+#include <string.h>
 using namespace std;
 
 int N;
@@ -13,7 +13,7 @@ void input() {
 	scanf("%d", &N);
 	for (int i = 0; i < N; i++) {
 		for (int j = 1; j <= 9; j++) {
-			scanf("%d", &RES[i][j]);
+			scanf("%d", &RES[i][j]);	
 		}
 	}
 }
@@ -23,10 +23,8 @@ void game() {
 	int pos[3] = { 0, }; // 0 : 1루 1 : 2루 2: 3루
 	int ep = 1, out = 0;
 	for (int i = 0; i < N; i++) {
-		memset(pos, 0, sizeof(pos));
-		while (1) {
-			int now = RES[i][ord[ep]];
-			switch (now)
+		while(1) {
+			switch (RES[i][ord[ep]])
 			{
 			case 1:
 				score += pos[2];
@@ -72,6 +70,7 @@ void game() {
 			if (ep > 9) ep = 1;
 			if (out == 3) {
 				out = 0;
+				memset(pos, 0, sizeof(pos));
 				break;
 			}
 		}
