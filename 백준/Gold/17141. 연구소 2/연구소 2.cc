@@ -88,12 +88,12 @@ void bfs() {
 }
 
 void dfs(int now, int cnt) {
-	// 기저조건 -> 3개를 고르면 종료
+	// 기저조건 -> M개를 고르면 종료
 	if (cnt == M) {
 		bfs();
 		return;
 	}
-	// 재귀 구성 -> 
+	// 재귀 구성
 	for (int i = now; i < v.size(); i++) {
 		if (used[i])
 			continue;
