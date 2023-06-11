@@ -4,6 +4,8 @@ using namespace std;
 
 int N;
 int DAT[20];
+int dialDAT1[30 - 2];
+int dialDAT2[30 - 1];
 int cnt;
 
 void dfs(int now) {
@@ -12,21 +14,15 @@ void dfs(int now) {
 		return;
 	}
 	for (int i = 0; i < N; i++) {
-		DAT[now] = i;
-		int flag = 0;
-		for (int j = 0; j < now; j++) {
-			if (DAT[now] == DAT[j]) {
-				flag = 1;
-				break;
-			}
-			else if (abs(DAT[now] - DAT[j]) == now - j) {
-				flag = 1;
-				break;
-			}
-		}
-		if (!flag)
+		if (DAT[i] + dialDAT1[now + i] + dialDAT2[N - (now - i)] == 0) {
+			DAT[i] = 1;
+			dialDAT1[now + i] = 1;
+			dialDAT2[N - (now - i)] = 1;
 			dfs(now + 1);
-		DAT[now] = 0;
+			DAT[i] = 0;
+			dialDAT1[now + i] = 0;
+			dialDAT2[N - (now - i)] = 0;
+		}
 	}
 }
 
