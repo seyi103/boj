@@ -13,26 +13,20 @@ int main() {
 		int N, M;
 		unordered_map<string, int> um;
 		int cnt = 0;
-		// input
+		string str;
+		// input + solve
 		cin >> N >> M;
 		for (int i = 0; i < N; i++) {
-			string str;
 			cin >> str;
-			if (um.find(str) != um.end())
-				um[str]++, cnt++;
-			else
-				um[str] = 1;
+			um[str] = 1;
 		}
 		for (int i = 0; i < M; i++) {
-			string str;
 			cin >> str;
 			if (um.find(str) != um.end())
 				um[str]++, cnt++;
 			else
 				um[str] = 1;
 		}
-		// solve
-
 		// output
 		cout << '#' << tc << ' ' << cnt << '\n';
 	}
